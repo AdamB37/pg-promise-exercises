@@ -1,0 +1,16 @@
+{
+  "name": "pg-promise-tutorial",
+  "version": "1.0.0",
+  "description": "A tutorial for pg-promise",
+  "main": "index.js",
+  "scripts": {
+    "verify": "dropdb pg-promise-tutorial && createdb pg-promise-tutorial && node exercises.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Learners Guild",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "pg-promise": "^5.5.8"
+  }
+}
