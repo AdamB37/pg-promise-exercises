@@ -9,8 +9,7 @@ createdb pg-promise-exercises
 psql -d pg-promise-exercises -f schema.sql
 ```
 
-### 2. Fix `user` in the `postgresConfig` the `exercises.js`
-
+### 2. Fix `user` in the `postgresConfig` in the file `exercises.js`
 
 
 ## Specifications
