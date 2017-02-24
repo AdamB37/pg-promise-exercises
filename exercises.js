@@ -108,7 +108,7 @@ findAuthorsOrderedByLastName.then(authors => {
    @input params: None
    @output: [{first_name, last_name, title}]
 
-   In this exercise you will also have to write the assertions. For inspiration,
+   In this exercise you will ALSO have to write the assertions. For inspiration,
    look at the assertions in Exercises 1 - 3.
 
    Expected Result:
@@ -147,7 +147,7 @@ let findBookAuthors; // IMPLEMENT THIS FUNCTION
    @input params: None
    @output: [{first_name, last_name, title}]
 
-   In this exercise you will also have to write the assertions. For inspiration,
+   In this exercise you will ALSO have to write the assertions. For inspiration,
    look at the assertions in Exercises 1 - 3.
 
    Expected Result:
@@ -175,7 +175,7 @@ let authorIdWithTwoBooks; // IMPLEMENT THIS FUNCTION
    @input params: None
    @output: [{title}]
 
-   In this exercise you will also have to write the assertions. For inspiration,
+   In this exercise you will ALSO have to write the assertions. For inspiration,
    look at the assertions in Exercises 1 - 3.
 
    Expected Result:
@@ -205,7 +205,7 @@ let bookTitlesWithMultipleEditions; // IMPLEMENT THIS FUNCTION
    @input params: None
    @output: [{first_name, last_name, title}]
 
-   In this exercise you will also have to write the assertions. For inspiration,
+   In this exercise you will ALSO have to write the assertions. For inspiration,
    look at the assertions in Exercises 1 - 3.
 
    Expected Result:

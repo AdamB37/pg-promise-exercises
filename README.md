@@ -21,3 +21,8 @@ whoami
 ## Exercises
 
 Complete all the exercises 1 - 7 in `exercises.js` by carefully reading the instructions listed.
+
+Constantly check if your functions and assertions work by running this in a terminal window
+```bash
+node exercises.js
+```
