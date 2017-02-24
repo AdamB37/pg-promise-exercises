@@ -1,16 +1,22 @@
 ## PG-PROMISE-EXERCISES
+Exercises which tickles your JavaScript Promises knowledge.
 
-## Installation Instructions
+Base repository for the [promises-applied](https://github.com/GuildCrafts/web-development-js/issues/186) goal.
 
-### 1. Initialize the database
+## Getting Started
+
+#### 1. Create and load the database
 Run the following commands in a terminal window
 ```bash
 createdb pg-promise-exercises
 psql -d pg-promise-exercises -f schema.sql
 ```
 
-### 2. Fix `user` in the `postgresConfig` in the file `exercises.js` so that you can connect to your the postgres database
-
+#### 2. Fix `user` in the `postgresConfig` in  `exercises.js` to your username so that you can connect to your the postgres database
+Your username can be found by running this in a terminal window
+```bash
+whoami
+```
 
 ## Exercises
 
