@@ -5,7 +5,7 @@ const postgresConfig = {
   host: 'localhost',
   port: 5432,
   database: 'pg-promise-exercises',
-  user: '<change-this-to-your-username>', // replace this with your username
+  user: 'adambeshir', // replace this with your username
   password: '' //  replace this if you have set a password for your username (this is unlikely)
 };
 
@@ -31,7 +31,7 @@ const allBooks = db.any('select * from books')
 /* This is calling the `then` function on the `allBooks` promise, and checks if
    we get back 15 rows. This assertion will fail. Make it PASS!*/
 allBooks.then(books => {
-  assert.deepEqual(books.length, 20)
+  assert.deepEqual(books.length, 15)
 }).catch(error => {
   console.log('Dang, my assertion failed.', error);
 });
@@ -55,7 +55,7 @@ allBooks.then(books => {
 
 */
 
-let firstTenBooks; // = .... IMPLEMENT THIS FUNCTION
+let firstTenBooks = db.any('select title from books') // = .... IMPLEMENT THIS FUNCTION
 firstTenBooks.then(books => {
   assert(books.length, 10)
 }).catch(error => {
@@ -83,7 +83,7 @@ firstTenBooks.then(books => {
 
 */
 
-let findAuthorsOrderedByLastName; // = .... IMPLEMENT THIS FUNCTION
+let findAuthorsOrderedByLastName = db.any('select last_name from authors order by last_name') // = .... IMPLEMENT THIS FUNCTION
 findAuthorsOrderedByLastName.then(authors => {
   assert.deepEqual(authors.length, 19)
   assert.deepEqual(authors[0].last_name, 'Alcott')
@@ -128,7 +128,33 @@ findAuthorsOrderedByLastName.then(authors => {
    {first_name: 'Theodor Seuss', last_name: 'Geisel', title: 'Bartholomew and the Oobleck'}
    {first_name: 'Theodor Seuss', last_name: 'Geisel', title: 'The Cat in the Hat'}]
 */
-let findBookAuthors; // IMPLEMENT THIS FUNCTION
+let expectedResultExercise4 = [
+  {first_name: 'John', last_name: 'Worsley', title: 'Practical PostgreSQL'},
+  {first_name: 'Paulette', last_name: 'Bourgeois', title: 'Franklin in the Dark'},
+  {first_name: 'Margery Williams', last_name: 'Bianco', title: 'The Velveteen Rabbit'},
+  {first_name: 'Louisa May', last_name: 'Alcott', title: 'Little Women'},
+  {first_name: 'Stephen', last_name: 'King', title: 'The Shining'},
+  {first_name: 'Frank', last_name: 'Herbert', title: 'Dune'},
+  {first_name: 'Burne', last_name: 'Hogarth', title: 'Dynamic Anatomy'},
+  {first_name: 'Margaret Wise', last_name: 'Brown', title: 'Goodnight Moon'},
+  {first_name: 'Edgar Allen', last_name: 'Poe', title: 'The Tell-Tale Heart'},
+  {first_name: 'Mark', last_name: 'Lutz', title: 'Learning Python'},
+  {first_name: 'Mark', last_name: 'Lutz', title: 'Programming Python'},
+  {first_name: 'Tom', last_name: 'Christiansen', title: 'Perl Cookbook'},
+  {first_name: 'Arthur C.', last_name: 'Clarke', title: '2001: A Space Odyssey'},
+  {first_name: 'Theodor Seuss', last_name: 'Geisel', title: 'Bartholomew and the Oobleck'},
+  {first_name: 'Theodor Seuss', last_name: 'Geisel', title: 'The Cat in the Hat'}
+]
+let findBookAuthors = db.any('select first_name, last_name, title from authors join books on authors.id = books.author_id') // IMPLEMENT THIS FUNCTION
+findBookAuthors.then(books => {
+  books.forEach((element,index) => {
+    assert.deepEqual(element.first_name, expectedResultExercise4[index].first_name)
+    assert.deepEqual(element.last_name, expectedResultExercise4[index].last_name)
+    assert.deepEqual(element.title, expectedResultExercise4[index].title)
+  })
+}).catch(error => {
+  console.log('Whoops, my function doesnt behave as expected.', error);
+})
 
 /* --------End of Exercise 4---------------- */
 
@@ -156,7 +182,20 @@ let findBookAuthors; // IMPLEMENT THIS FUNCTION
 
 
 */
-let authorIdWithTwoBooks; // IMPLEMENT THIS FUNCTION
+let expectedResultExercise5 = [
+  {author_id: 1809},
+  {author_id: 7805}
+]
+let authorIdWithTwoBooks = db.any('select author_id from books group by author_id having count(author_id) = 2') // IMPLEMENT THIS FUNCTION
+authorIdWithTwoBooks.then(authors => {
+  authors.forEach((element,index) => {
+    assert.deepEqual(element.author_id, expectedResultExercise5[index].author_id)
+  })
+}).catch(error => {
+  console.log('Whoops, my function doesnt behave as expected.', error);
+})
+
+
 
 /* --------End of Exercise 5---------------- */
 
@@ -186,7 +225,24 @@ let authorIdWithTwoBooks; // IMPLEMENT THIS FUNCTION
       {title: 'The Tell-Tale Heart'}]
 
 */
-let bookTitlesWithMultipleEditions; // IMPLEMENT THIS FUNCTION
+let expectedResultExercise6 = [
+  {title: 'The Shining'},               ///7808
+  {title: 'Dune'},                      ///4513
+  {title: 'The Tell-Tale Heart'},      ///156
+  {title: '2001: A Space Odyssey'},     ///4267
+  {title: 'The Cat in the Hat'},        ///1608
+]
+let bookTitlesWithMultipleEditions = db.any(`
+  select title from books join editions
+  on books.id = editions.book_id
+  group by books.id having count(id) > 1`) // IMPLEMENT THIS FUNCTION
+bookTitlesWithMultipleEditions.then(books => {
+  books.forEach((element, index) => {
+    assert.deepEqual(element.title, expectedResultExercise6[index].title)
+  })
+}).catch(error => {
+  console.log('Whoops, my function doesnt behave as expected.', error)
+})
 
 /* --------End of Exercise 6---------------- */
 
@@ -213,8 +269,26 @@ let bookTitlesWithMultipleEditions; // IMPLEMENT THIS FUNCTION
      {title: 'The Cat in the Hat', first_name: 'Theodor Seuss', last_name: 'Geisel'}]
 
 */
-let findStockedBooks; // IMPLEMENT THIS FUNCTION
-
+let expectedResultExercise7 = [
+  {title: 'Dune', first_name: 'Frank', last_name: 'Herbert'},
+  {title: 'The Cat in the Hat', first_name: 'Theodor Seuss', last_name: 'Geisel'}
+]
+let findStockedBooks = db.any(`
+  select distinct title, first_name, last_name from books
+  join authors on books.author_id = authors.id
+  join editions on editions.book_id = books.id
+  join daily_inventory on editions.isbn = daily_inventory.isbn
+  where daily_inventory.is_stocked = true
+  `) // IMPLEMENT THIS FUNCTION
+findStockedBooks.then(books => {
+  books.forEach((element, index) => {
+    assert.deepEqual(element.title, expectedResultExercise7[index].title)
+    assert.deepEqual(element.first_name, expectedResultExercise7[index].first_name)
+    assert.deepEqual(element.last_name, expectedResultExercise7[index].last_name)
+  })
+}).catch(error => {
+  console.log('Whoops, my function doesnt behave as expected.', error)
+})
 /* --------End of Exercise 7---------------- */
 
 
